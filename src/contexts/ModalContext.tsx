@@ -55,7 +55,8 @@ export const ModalProvider: React.FC = ({ children }) => {
         outubro: 'dd/mm/yyyy',
         novembro: 'dd/mm/yyyy',
         dezembro: 'dd/mm/yyyy',
-      }
+      },
+      edited: false
     }
   ]);
 

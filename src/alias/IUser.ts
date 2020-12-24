@@ -1,6 +1,7 @@
 import IPaymentData from './../alias/IPaymentData'
 
 export interface IUser{
+    edited?: boolean,
     cpf: string, 
     nome: string, 
     dataPagamento: string, 

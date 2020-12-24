@@ -25,43 +25,43 @@ const ClientsScreen = (): JSX.Element => {
   const [showAlertOutubro, setShowAlertOutubro] = useState(false);
   const [showAlertNovembro, setShowAlertNovembro] = useState(false);
   const [showAlertDezembro, setShowAlertDezembro] = useState(false);
-  const { toggleEditInfo, setToggleEditInfo } = useModal();
+  const { toggleEditInfo, setToggleEditInfo, setToggleEditInfo2, toggleEditInfo2 } = useModal();
   const { users, setUsers } = useModal();
   const toggleExpandInfo = (item: any) => {
     item.opened = !item.opened;
     item.opened = !item.opened;
   }
   const get = async () => {
-      try{
-        const value = await AsyncStorage.getItem('@clientes');
-        if(value){
-          const JSONParse : IUser[] = JSON.parse(value);
-          setUsers(JSONParse as IUser[]);
-        }
-      }catch(error){
-        console.log('Erro no get!', error);
+    try{
+      const value = await AsyncStorage.getItem('@clientes');
+      if(value){
+        const JSONParse : IUser[] = JSON.parse(value);
+        setUsers(JSONParse as IUser[]);
       }
+    }catch(error){
+      console.log('Erro no get!', error);
+    }
   }
 
   return (
     <>
     <ScrollView>
       {!toggleEditInfo &&
-      <> 
-        <View style={styles.searchBarContainer}>
-          {/*@ts-ignore*/}
-          <Searchbar
-            placeholder="Procurar cliente"
-            style={styles.searchBar}
-            onLayout={() => get()}
-          />
-        </View>
-      </>
+        <> 
+          <View style={styles.searchBarContainer}>
+            {/*@ts-ignore*/}
+            <Searchbar
+              placeholder="Procurar cliente"
+              style={styles.searchBar}
+              onLayout={() => get()}
+            />
+          </View>
+        </>
       }
       {!toggleEditInfo /* && users && console.log('Assim está users:', users) */ &&
         users.map((item: IUser, i: any) => (
           item.nome !== '' &&
-          <View style={styles.clientsContainer} key={i}>
+          (!toggleEditInfo2 ? <View style={styles.clientsContainer} key={i}>
           <ListItem style={styles.clientsItem}> 
             <ListItem.Content>
               <View style={styles.clientsInformationContainer}>
@@ -69,7 +69,12 @@ const ClientsScreen = (): JSX.Element => {
                 <View style={styles.clientsInformation}>
                   <TouchableOpacity onPress={() => 
                     {
-                      item.opened = !item.opened;
+                      if(item.edited === false){
+                        item.opened = !item.opened;
+                      }else{
+                        item.edited = false;
+                        item.opened = !item.opened;
+                      }
                     }
                   }>
                     <ListItem.Title>
@@ -93,7 +98,13 @@ const ClientsScreen = (): JSX.Element => {
               </View>   
             </ListItem.Content>
               <TouchableOpacity onPress={() => {
-                  setToggleEditInfo(!toggleEditInfo);
+                  if(item.edited === false){
+                    item.edited = true;
+                  }else{
+                    item.edited = false;
+                  }
+                  item.opened = false;
+                  
                 }}>
                 <Icon name="md-create" size={30} color={"gray"} style={styles.editClients}/>
               </TouchableOpacity>
@@ -106,6 +117,93 @@ const ClientsScreen = (): JSX.Element => {
               </TouchableOpacity>
           
           </ListItem>
+
+              { item.edited && <View>
+                    <View style={styles.formContainer}>
+                      <View style={styles.avatarContainer}>
+{/*                         <Image source={require('./../assets/images/editinfo.jpg')} style={styles.avatar}/>*/}                          
+                            </View>
+                              <View style={styles.formInputContainer}>
+                                <Input style={Platform.select({
+                                    ios: styles.formInputSelfFirstIOS,
+                                    // @ts-ignore
+                                    android: styles.formInputSelfFirstAndroid,
+                                })}
+                                placeholder='Nome Completo'
+                                defaultValue={item.nome}
+                                onChangeText={(e) => item.nome = e}
+                                />
+                                  <Input style={Platform.select({
+                                      ios: styles.formInputSelfIOS,
+                                      // @ts-ignore
+                                      android: styles.formInputSelfAndroid,
+                                  })}
+                                placeholder='Cadastro de Pessoa Física (CPF)'
+                                defaultValue={item.cpf}
+                                onChangeText={(e) => item.cpf = e}
+                                />
+                                <Input style={Platform.select({
+                                    ios: styles.formInputSelfIOS,
+                                    // @ts-ignore
+                                    android: styles.formInputSelfAndroid,
+                                })}
+                                placeholder='Endereço'
+                                defaultValue={item.endereco}
+                                onChangeText={(e) => item.endereco = e}
+                                />
+                                <Input style={Platform.select({
+                                    ios: styles.formInputSelfIOS,
+                                    // @ts-ignore
+                                    android: styles.formInputSelfAndroid,
+                                })}
+                                placeholder='Telefone de Contato'
+                                defaultValue={item.telefone}
+                                onChangeText={(e) => item.telefone = e}
+                                />
+                                <Input style={Platform.select({
+                                    ios: styles.formInputSelfIOS,
+                                    // @ts-ignore
+                                    android: styles.formInputSelfAndroid,
+                                })}
+                                placeholder='Dia de pagamento do aluno (Ex: 10)'
+                                defaultValue={item.dataPagamento}
+                                onChangeText={(e) => 
+                                  {
+                                    item.dataPagamento = e;
+                                    item.dataDePagamento.janeiro = e;
+                                    item.dataDePagamento.fevereiro = e;
+                                    item.dataDePagamento.marco = e;
+                                    item.dataDePagamento.abril = e;
+                                    item.dataDePagamento.maio = e;
+                                    item.dataDePagamento.junho = e;
+                                    item.dataDePagamento.julho = e;
+                                    item.dataDePagamento.agosto = e;
+                                    item.dataDePagamento.setembro = e;
+                                    item.dataDePagamento.outubro = e;
+                                    item.dataDePagamento.novembro = e;
+                                    item.dataDePagamento.dezembro = e;
+                                  }
+                                }
+                                />
+                                <Button
+                                style={Platform.select({
+                                ios: styles.confirmButtonIOS,
+                                // @ts-ignore
+                                android: styles.confirmButtonAndroid,
+                                })}
+                                title="Fechar dados"
+                                onPress={() => 
+                                  {
+                                      item.edited = false;
+                                      item.opened = false;
+                                  }
+                                }
+                                />
+                          </View>
+                      </View>
+                  </View> 
+          } 
+          
           { item.opened === true &&
             <>
             <ListItem>
@@ -456,97 +554,7 @@ const ClientsScreen = (): JSX.Element => {
                 </TouchableOpacity>
               </ListItem>
 
-              {toggleEditInfo && (
-                <View>
-                    <TouchableOpacity onPress={() => setToggleEditInfo(false)} style={styles.backPage}>
-                        <Icon size={60} name="ios-arrow-round-back" color='#3693d7'/>
-                    </TouchableOpacity>
-                    <View style={styles.formContainer}>
-                      <View style={styles.avatarContainer}>
-                        <Image source={require('./../assets/images/editinfo.jpg')} style={styles.avatar}/>
-                          </View>
-                              <View style={styles.formInputContainer}>
-                                <Input style={Platform.select({
-                                    ios: styles.formInputSelfFirstIOS,
-                                    // @ts-ignore
-                                    android: styles.formInputSelfFirstAndroid,
-                                })}
-                                placeholder='Nome Completo'
-                                defaultValue={item.nome}
-                                onChangeText={(e) => item.nome = e}
-                                />
-                                  <Input style={Platform.select({
-                                      ios: styles.formInputSelfIOS,
-                                      // @ts-ignore
-                                      android: styles.formInputSelfAndroid,
-                                  })}
-                                placeholder='Cadastro de Pessoa Física (CPF)'
-                                defaultValue={item.cpf}
-                                onChangeText={(e) => item.cpf = e}
-                                />
-                                <Input style={Platform.select({
-                                    ios: styles.formInputSelfIOS,
-                                    // @ts-ignore
-                                    android: styles.formInputSelfAndroid,
-                                })}
-                                placeholder='Endereço'
-                                defaultValue={item.endereco}
-                                onChangeText={(e) => item.endereco = e}
-                                />
-                                <Input style={Platform.select({
-                                    ios: styles.formInputSelfIOS,
-                                    // @ts-ignore
-                                    android: styles.formInputSelfAndroid,
-                                })}
-                                placeholder='Telefone de Contato'
-                                defaultValue={item.telefone}
-                                onChangeText={(e) => item.telefone = e}
-                                />
-                                <Input style={Platform.select({
-                                    ios: styles.formInputSelfIOS,
-                                    // @ts-ignore
-                                    android: styles.formInputSelfAndroid,
-                                })}
-                                placeholder='Dia de pagamento do aluno (Ex: 10)'
-                                defaultValue={item.dataPagamento}
-                                onChangeText={(e) => 
-                                  {
-                                    item.dataPagamento = e;
-                                    item.dataDePagamento.janeiro = e;
-                                    item.dataDePagamento.fevereiro = e;
-                                    item.dataDePagamento.marco = e;
-                                    item.dataDePagamento.abril = e;
-                                    item.dataDePagamento.maio = e;
-                                    item.dataDePagamento.junho = e;
-                                    item.dataDePagamento.julho = e;
-                                    item.dataDePagamento.agosto = e;
-                                    item.dataDePagamento.setembro = e;
-                                    item.dataDePagamento.outubro = e;
-                                    item.dataDePagamento.novembro = e;
-                                    item.dataDePagamento.dezembro = e;
-                                  }
-                                }
-                                />
-                                <Button
-                                style={Platform.select({
-                                ios: styles.confirmButtonIOS,
-                                // @ts-ignore
-                                android: styles.confirmButtonAndroid,
-                                })}
-                                title="Voltar"
-                                onPress={() => 
-                                  {
-                                    item.opened = false;
-                                    setToggleEditInfo2(true);
-                                  }
-                                  
-                                }
-                                />
-                          </View>
-                      </View>
-                  </View>
-              )  
-            }
+                
 
               <AwesomeAlert
                 show={showAlertJaneiro}
@@ -848,11 +856,9 @@ const ClientsScreen = (): JSX.Element => {
               />
             </>
           }
-          
-
-          
         </View>
-        ))
+        : <></>
+        )))
       }
     </ScrollView>
     </>
@@ -972,7 +978,6 @@ const styles = StyleSheet.create({
     ...sanFranciscoWeights.thin
     },
     avatarContainer:{
-      height: "40%",
       width: "100%",
       flexDirection: 'row',
       alignItems: 'center',

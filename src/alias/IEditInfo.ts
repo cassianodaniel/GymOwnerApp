@@ -19,4 +19,5 @@ export interface IEditInfo{
     novembro: boolean,
     dezembro: boolean,
     subtitle: string,
+    edited?: boolean
 }

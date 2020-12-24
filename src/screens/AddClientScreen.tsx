@@ -47,7 +47,8 @@ const AddClientScreen = () => {
         outubro: `${dataPagamento}`,
         novembro: `${dataPagamento}`,
         dezembro: `${dataPagamento}`,
-      }
+      },
+      edited: false,
     };
 
     /* setUsers([...users, user]); */
