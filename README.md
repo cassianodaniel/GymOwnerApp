@@ -37,3 +37,9 @@ yarn start
 ### Credits
 
 - [Expo-Typescript-Starter](https://github.com/Naturalclar/expo-typescript-starter)
+
+### Screenshots
+
+![Home screen](https://github.com/danielcassiano/GymOwnerApp/blob/prints/1.png?raw=true)
+![Confirm payment screen](https://github.com/danielcassiano/GymOwnerApp/blob/prints/2.png?raw=true)
+![Payments screen](https://github.com/danielcassiano/GymOwnerApp/blob/prints/3.png?raw=true)
