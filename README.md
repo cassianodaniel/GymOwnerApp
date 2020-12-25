@@ -27,3 +27,7 @@ cd expo-typescript-starter
 ```sh
 yarn
 ```
+
+### Credits
+
+- [Expo-Typescript-Starter](https://github.com/Naturalclar/expo-typescript-starter)
