@@ -104,7 +104,6 @@ const ClientsScreen = (): JSX.Element => {
                     item.edited = false;
                   }
                   item.opened = false;
-                  
                 }}>
                 <Icon name="md-create" size={30} color={"gray"} style={styles.editClients}/>
               </TouchableOpacity>

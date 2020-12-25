@@ -57,7 +57,6 @@ const AddClientScreen = () => {
     try{
       const jsonValue = JSON.stringify(users);
       await AsyncStorage.setItem('@clientes', jsonValue);
-      Alert.alert(JSON.stringify(users.filter((item) => item.nome)));
       setNome('');
       setCpf('');
       setTelefone('');
@@ -72,7 +71,7 @@ const AddClientScreen = () => {
       }catch(error){
         console.log('Erro no get!', error);
       }
-      Alert.alert("Sucesso! Cliente cadastrado e get executado!")    
+      Alert.alert("Sucesso! Cliente cadastrado.")    
     }catch(error){
       console.log('Erro no SET do asyncStorage', error);
     }
