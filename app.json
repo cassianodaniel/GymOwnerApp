@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-typescript",
-    "slug": "react-native-typescript",
+    "name": "GymOwnerApp",
+    "slug": "gym-owner-app",
     "privacy": "public",
     "platforms": [
       "ios",
@@ -11,7 +11,7 @@
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "splash": {
-      "image": "./src/assets/images/gym.jpg",
+      "image": "./src/assets/images/gym.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,8 +22,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.danielchaves.gymownerapp"
     },
-    "description": "Template for expo project with TS, Storybook, Reg-Suit"
+    "android": {
+      "package": "com.danielchaves.gymownerapp"
+    },
+    "description": "Gym management system app"
   }
 }

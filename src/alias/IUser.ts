@@ -1,4 +1,5 @@
-import IPaymentData from './../alias/IPaymentData'
+import IPaymentData from './../alias/IPaymentData';
+import IItem from './../alias/IItem';
 
 export interface IUser{
     edited?: boolean,
@@ -20,10 +21,7 @@ export interface IUser{
     outubro: boolean,
     novembro: boolean,
     dezembro: boolean,
-    item: {
-        nome: string,
-        cpf: string,
-    },
+    item: IItem,
     subtitle: string,
     dataDePagamento : IPaymentData
 }

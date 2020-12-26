@@ -7,19 +7,21 @@ import { robotoWeights } from 'react-native-typography'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useModal } from '../contexts/ModalContext';
 import { IEditInfo }  from './../alias/IEditInfo';
-
+import { IUser } from '../alias/IUser';
+import IItem from '../alias/IItem';
+import IPaymentData from '../alias/IPaymentData';
 
 const EditInfoScreen : React.FC<IEditInfo> = ({ nome, cpf, endereco, telefone, dataPagamento, opened, janeiro, fevereiro, marco, abril, maio, junho, julho, agosto, setembro,outubro,novembro,dezembro}) => {
     const { setToggleEditInfo } = useModal();
     const save = async () => {
-      let user = {
-        nome: nome,
-        cpf: cpf,
-        endereco: endereco,
-        telefone: telefone,
-        dataPagamento: dataPagamento,
-        item: '',
-        opened: opened,
+      let user : IUser = {
+        nome: nome as string,
+        cpf: cpf as string,
+        endereco: endereco as string,
+        telefone: telefone as string,
+        dataPagamento: dataPagamento as string, 
+        item: {nome: nome, cpf: cpf} as IItem,
+        opened: opened as boolean,
         janeiro: janeiro,
         fevereiro: fevereiro,
         marco: marco,
@@ -31,7 +33,23 @@ const EditInfoScreen : React.FC<IEditInfo> = ({ nome, cpf, endereco, telefone, d
         setembro: setembro,
         outubro: outubro,
         novembro: novembro,
-        dezembro: dezembro
+        dezembro: dezembro,
+        dataDePagamento: {
+          janeiro: dataPagamento,
+          fevereiro: dataPagamento,
+          marco: dataPagamento,
+          abril: dataPagamento,
+          maio: dataPagamento,
+          junho: dataPagamento,
+          julho: dataPagamento,
+          agosto: dataPagamento,
+          setembro: dataPagamento,
+          outubro: dataPagamento,
+          novembro: dataPagamento,
+          dezembro: dataPagamento,
+        } as IPaymentData,
+        subtitle: 'Cliente ativo',
+        edited: false
       };
       try{
         const jsonValue = JSON.stringify(user);
