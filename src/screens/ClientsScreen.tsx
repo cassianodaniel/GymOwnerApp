@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage';
-import AwesomeAlert from 'react-native-awesome-alerts';
-import { View, Text, StyleSheet, Platform, Image, Alert } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { ListItem  } from 'react-native-elements'
 import { Searchbar } from 'react-native-paper';
@@ -29,9 +28,6 @@ const ClientsScreen = (): JSX.Element => {
         const JSONParse : IUser[] = JSON.parse(value);
         setUsers(JSONParse as IUser[]);
       }
-    }catch(error){
-      console.log('Erro no get!', error);
-    }
   };
 
   const searchArray = (users: IUser[], search: string) => {
@@ -73,7 +69,7 @@ const ClientsScreen = (): JSX.Element => {
           </View>
         </>
       }
-      {!toggleEditInfo /* && users && console.log('Assim está users:', users) */ &&
+      {!toggleEditInfo  &&
         searchArray(users, search).map((item: IUser, i: any) => (
           item.nome !== '' &&
           (!toggleEditInfo2 ? <View style={styles.clientsContainer} key={i}>
