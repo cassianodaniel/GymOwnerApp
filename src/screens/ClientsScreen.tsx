@@ -41,7 +41,13 @@ const ClientsScreen = (): JSX.Element => {
     }catch(error){
       console.log('Erro no get!', error);
     }
-  }
+  };
+  const [search, setSearch] = useState("");
+  const searchArray = (users: IUser[], search: string) => {
+    return users.filter((item) => {
+      return item.nome.toUpperCase().match(search.toUpperCase());
+    });
+  };
 
   return (
     <>
@@ -54,12 +60,13 @@ const ClientsScreen = (): JSX.Element => {
               placeholder="Procurar cliente"
               style={styles.searchBar}
               onLayout={() => get()}
+              onChangeText={(e) => setSearch(e)}
             />
           </View>
         </>
       }
       {!toggleEditInfo /* && users && console.log('Assim está users:', users) */ &&
-        users.map((item: IUser, i: any) => (
+        searchArray(users, search).map((item: IUser, i: any) => (
           item.nome !== '' &&
           (!toggleEditInfo2 ? <View style={styles.clientsContainer} key={i}>
           <ListItem style={styles.clientsItem}> 
