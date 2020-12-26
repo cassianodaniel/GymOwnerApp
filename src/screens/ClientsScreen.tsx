@@ -28,6 +28,8 @@ const ClientsScreen = (): JSX.Element => {
         const JSONParse : IUser[] = JSON.parse(value);
         setUsers(JSONParse as IUser[]);
       }
+    }catch(err){
+    }
   };
 
   const searchArray = (users: IUser[], search: string) => {
