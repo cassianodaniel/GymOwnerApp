@@ -29,6 +29,7 @@ const ClientsScreen = (): JSX.Element => {
         setUsers(JSONParse as IUser[]);
       }
     }catch(err){
+      console.log(err);
     }
   };
 
